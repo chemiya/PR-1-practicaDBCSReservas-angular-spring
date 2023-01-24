@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+
+
+<body>
+
+    <nav class="navbar navbar-expand navbar-dark bg-dark">
+        <a  class="navbar-brand">GESTION DE USUARIOS</a><!--enlace a ruta a partir de un a-->
+        <a class="btn btn-primary" [routerLink]="['/book']">Ir a gestion de reservas</a>
+        
+    
+        
+    
+        <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn"><!--if enlazo con variable si esta logeado-->
+            
+          <li class="nav-item"><!--enlace a ruta a partir de un a, enlazando con variable de nombre-->
+            <a href="/profile" class="nav-link" [routerLink]="['/profile']">{{ username }}</a>
+          </li>
+          <li class="nav-item">
+            <a href class="nav-link" (click)="logout()">LogOut</a><!--evento click sobre a-->
+          </li>
+        </ul>
+      </nav>
+
+   
+
+
+   
+
+
+    <!--contenedor para mostrar el mensaje que informe de si se han realizado las operaciones-->
+    <div class="container contenedorAlertas"><!--ngif enlazo con variable para si se muestra mensaje o no-->
+        <p *ngIf="!showMessage">Selecciona la accion que quieres realizar</p>
+        <p *ngIf="showMessage">{{message}}</p><!--enlazo con el mensaje-->
+    </div>
+
+
+    <div class="container">
+        <div class="row botonesFiltros mb-4">
+            <div class="col">
+                <!--boton para crear nuevo usuario, enlazo ruta-->
+                <a class="btn btn-primary" [routerLink]="['/usuarios/nuevo']">Crear nuevo usuario</a>
+            </div>
+            <div class="col">
+                <!--boton para guardar los cambios de enabled, desactivado segun la variable de guardarcambios-->
+                <button [disabled]="botonGuardarCambios" class="btn btn-success" (click)="guardarEnabled()">Guardar
+                    cambios enabled </button><!--click evento-->
+            </div>
+
+            <div>
+
+                <!--despegable para filtrar los usuarios, enlazo con variable y al cambiar llamo evento-->
+                <select [ngModel]="tipoFiltrado" (ngModelChange)="onChangeDespegable($event)">
+                    <option value="true">mostrar solo los enabled true</option>
+                    <option value="false">mostrar solo los enabled false</option>
+                    <option value="todos">mostrar todos</option>
+                </select>
+
+            </div>
+
+
+
+
+
+
+        </div>
+    </div>
+
+   
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <table class="table">
+                    <thead>
+                      <tr>
+                            <th>name</th>
+                            <th>firstName</th>
+                            <th>lastName</th>
+                            <th>email</th>
+                            <th>password</th>
+                            <th> enabled</th>
+                            <th>role</th>
+                            <th>createdAt</th>
+                            <th>updatedAt</th>
+                            <th></th>
+                            <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let usuario of Usuarios" ><!--ngfor para recorrer usuarios-->
+                        <td><i>{{usuario.name}}</i></td><!--muestro cada atributo-->
+                        <td><i>{{usuario.firstName}}</i></td>
+                        <td><i>{{usuario.lastName}}</i></td>
+                        <td><i>{{usuario.email}}</i></td>
+                        <td><i>contraseña larga</i></td>
+                        <td><input [(ngModel)]="usuario.enabled" type="checkbox"
+                            (change)="cambioCheckbox(usuario.id,usuario.enabled)"></td><!--enlazo con atributo si enabled-->
+                            <!--al cambiar, le paso argumentos-->
+                    <td><i>{{usuario.role}}</i></td>
+                    <td><i>{{usuario.createdAt}}</i></td>
+                    <td><i>{{usuario.updatedAt}}</i></td>
+                    <td><a class="btn btn-info" [routerLink]="['/usuarios', usuario.id,
+                        'editar']"> Editar </a> </td><!--boton de editar, voy a la ruta y le paso el id-->
+                                               
+                    <td><a class="btn btn-danger" (click)="borrar(usuario.id)">eliminar</a></td><!--evento que paso argumento el id-->
+                                         
+                       
+                    </tr>
+                      
+                    </tbody>
+                  </table>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+
+
+<body>
+
+
+    <!--barra de navegacion------------------------->
+    <nav class="navbar navbar-expand navbar-dark bg-dark">
+        <a  class="navbar-brand">GESTION DE RESERVAS</a><!--enlace con a la ruta de usuarios-->
+        <a class="btn btn-primary" [routerLink]="['/usuarios']"> Ir a gestion de usuarios</a>
+        
+    
+        
+    
+        <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn"><!--enlace con variable para ver si esta registrado o no-->
+            
+          <li class="nav-item"><!--navego a ruta con a y muestro variable username-->
+            <a href="/profile" class="nav-link" [routerLink]="['/profile']">{{ username }}</a>
+          </li>
+          <li class="nav-item"><!--click para salir-->
+            <a href class="nav-link" (click)="logout()">LogOut</a>
+          </li>
+        </ul>
+      </nav>
+
+
+    
+
+
+    <!--contenedor para mostrar el mensaje que informe de si se han realizado las operaciones-->
+    <div class="container contenedorAlertas"><!--segun si tiene que mostrar mensaje o no, pone el mensaje-->
+        <p *ngIf="!showMessage">Selecciona la accion que quieres realizar</p>
+        <p *ngIf="showMessage">{{message}}</p>
+    </div>
+
+
+
+    <!--botones de acciones------------------------->
+    <div class="container">
+        <div class="row botonesFiltros">
+            <div class="col w-100 d-flex flex-column align-items-center">
+               <!--voy a las rutas desde un a, segun valor de la variable de si es guest-->
+                <a class="btn btn-primary mb-3" [routerLink]="['/book/nueva']" *ngIf="esGuest" >Crear nueva reserva</a>
+                <a class="btn btn-primary mb-3" [routerLink]="['/book/disponibilidad']">Comprobar disponibilidad</a>
+                <select class="mb-3" name="filtro" id="filtro" [(ngModel)]="filtro" (ngModelChange)="onChangeDespegable($event)" >
+                    <option value="todas">mostrar todas</option><!--select lo enlazo con la variable y al cambiar llamo evento-->
+                    <option value="Pending">mostrar Pending</option>
+                    <option value="Cancelled">mostrar Cancelled</option>
+                    <option value="Confirmed">mostrar confirmed</option>
+
+
+
+                </select>
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+
+
+
+    <!--tabla con las reservas---------------------->
+    <div class="container ">
+        <div class="row ">
+            <div class="col">
+                <table class="table">
+                    <thead>
+                      <tr>
+                            <th>id</th>
+                            <th>price</th>
+                            <th>units</th>
+                            <th>numGuest</th>
+                            <th>status</th>
+                            <th> dateIn</th>
+                            <th>dateOut</th>
+                            <th>createdAt</th>
+                            <th *ngIf="!esGuest">¿guestName?</th><!--si no es guest pongo los nombres-->
+                            <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let reserva of ReservasFiltradas" ><!--recorro las reservas y muestro sus atributos-->
+                            <td><i>{{reserva.id}}</i></td>
+                            <td><i>{{reserva.price}}</i></td>
+                            <td><i>{{reserva.units}}</i></td>
+                            <td><i>{{reserva.numGuest}}</i></td>
+                            <td><i>{{reserva.status}}</i></td>
+                           
+                            
+                            <td><i>{{reserva.dateIn}}</i></td>
+                            <td><i>{{reserva.dateOut}}</i></td>
+                            <td><i>{{reserva.createdAt}}</i></td>
+                            <td *ngIf="!esGuest"><i>{{reserva.guestName}}</i></td><!--si no es guest pongo el nombre-->
+                            
+                            <td *ngIf="!esGuest"><a class="btn btn-info" [routerLink]="['/book', reserva.id,
+    'editar']"> Editar </a> </td><!--navego a la ruta a partir de un a, poniendo el id-->
+                            
+                        </tr>
+                      
+                    </tbody>
+                  </table>
+
+
+
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

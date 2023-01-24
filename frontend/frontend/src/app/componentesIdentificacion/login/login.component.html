@@ -1,0 +1,122 @@
+
+<!--barra de arriba-------------------------->
+  <nav class="navbar navbar-expand navbar-dark bg-dark">
+    <a  class="navbar-brand">Aplicacion DBCS</a>
+
+    <ul class="navbar-nav ml-auto" >
+        
+      <li class="nav-item"><!--enlace con a la ruta de registrase-->
+        <a href="/register" class="nav-link" [routerLink]="['/register']">Registrarse</a>
+      </li>
+      
+    </ul>
+  </nav>
+
+
+
+
+  <!--carta para entrada-------------------------->
+<div class="col-md-12">
+  <div class="card card-container">
+    <img
+      id="profile-img"
+      src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+      class="profile-img-card"
+    />
+
+    <!--formulario-------------------------->
+    <!--muestor el formulario si no esta identificado-->
+    <form
+      *ngIf="!isLoggedIn"
+      name="form"
+      (ngSubmit)="f.form.valid && onSubmit()"
+      #f="ngForm"
+      novalidate
+    >
+    <!--nombre del formulario con ngform-->
+    <!--novalidate desactiva la validacion del navegador, por ejemplo la del email-->
+    <!--onsubit cuando sea valido llama al evento-->
+
+    <!--entrada email-------------------------->
+      <div class="form-group">
+        <label for="username">Email</label>
+        <input
+          type="text"
+          class="form-control"
+          name="username"
+          [(ngModel)]="form.username"
+          required
+          #username="ngModel"
+        />
+        <!--enlazo con la variable y le pongo nombre con ngmodel-->
+
+
+
+        <!--alerta email-------------------------->
+        <div
+          class="alert alert-danger"
+          role="alert"
+          *ngIf="username.errors && f.submitted"
+        >
+        <!--si hay errores en el username y se ha subido, pongo error-->
+          este campo es obligatorio
+      </div>
+      </div>
+
+
+
+      <!--entrada password-------------------------->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          name="password"
+          [(ngModel)]="form.password"
+          required
+          minlength="6"
+          #password="ngModel"
+        />
+         <!--enlazo con la variable y le pongo nombre con ngmodel, validacion longitud y requerido-->
+
+
+        <!--alerta password-------------------------->
+        <div
+          class="alert alert-danger"
+          role="alert"
+          *ngIf="password.errors && f.submitted"
+        >
+        <!--si se ha subido y hay errores pongo los errores-->
+          <div *ngIf="password.errors['required']">este campo es obligatorio</div>
+          <div *ngIf="password.errors['minlength']">
+            introduce al menos 6 caracteres
+          </div>
+        </div>
+      </div>
+
+
+      <!--boton----------------------------->
+      <div class="form-group">
+        <button class="btn btn-primary btn-block">
+          Iniciar Sesion
+        </button>
+      </div>
+
+
+
+
+      <!--alerta fallo------------------------->
+      <div class="form-group">
+        <div
+          class="alert alert-danger"
+          role="alert"
+          *ngIf="f.submitted && isLoginFailed"
+        >
+          Login failed: {{ errorMessage }}
+        </div><!--si se ha subido el formulario y hay error pongo el error-->
+      </div>
+    </form>
+
+    
+  </div>
+</div>

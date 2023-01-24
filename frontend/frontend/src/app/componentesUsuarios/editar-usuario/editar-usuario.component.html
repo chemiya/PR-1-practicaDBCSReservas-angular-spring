@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="row">
+        <div class="col-sm-12">
+           <!--cuando se suba el formularuo llamamos metodo onsubmit, ponemos nombre con ngForm para luego validarlo-->
+            <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+                <fieldset class="form-group">
+                    <div class="col-sm-3">
+                        <!--entrada del nombre y su informacion si es valido-->
+                        <label class="control-label" for="nombre">Name </label><!--desactivado si hay id si, sino no-->
+                        <input type="text" class="form-control" required [disabled]="id ? true : false"
+                            [(ngModel)]="usuario.name" name="nombre" (ngModelChange)="valueChangeName($event)">
+                            <p >{{nombreValido}}</p><!--enlazamos con el nombre, al cambiar llamamos evento que busca similar-->
+                            <!--enlazamos variable de si es valido-->
+                        </div>
+                </fieldset>
+                <fieldset class="form-group">
+                    <div class="col-sm-3">
+                        <!--entrada para firstname -->
+                        <label class="control-label" for="firstName">first name</label>
+                        <input type="text" class="form-control" required
+                             [(ngModel)]="usuario.firstName" name="firstName"><!--enlazamos con el campo del usuario-->
+                    </div>
+                </fieldset>
+                
+                <fieldset class="form-group">
+                    <div class="col-sm-3">
+                        <!--entrada para lastname -->
+                        <label class="control-label" for="lastName">last name</label>
+                        <input type="text" class="form-control" required
+                            [(ngModel)]="usuario.lastName" name="lastName"><!--enlazamos con el campo del usuario-->
+                    </div>
+                </fieldset>
+                <fieldset class="form-group">
+                    <div class="col-sm-3">
+                        <!--entrada para password -->
+                        <label class="control-label" for="password">password</label>
+                        <input type="text" class="form-control" required
+                             [(ngModel)]="usuario.password" name="password"><!--enlazamos con el campo del usuario-->
+                    </div>
+                </fieldset>
+                <fieldset class="form-group">
+                    <div class="col-sm-3">
+                        <!--entrada para role -->
+                        <label class="control-label" for="role">role</label>
+                        <select [(ngModel)]="usuario.role" name="role" [disabled]="id ? true : false">
+                            <option value="HOST">HOST</option>
+                            <option value="GUEST">GUEST</option>
+                            </select><!--enlazamos con el campo del usuario, desactivado si tengo id-->
+                    </div>
+                </fieldset>
+                <fieldset class="form-group">
+                    <div class="col-sm-6">
+                        <!--entrada para email y su validacion de si esta repetido -->
+                        <label class="control-label" for="email">email</label>
+                        <input type="text" class="form-control"
+                        required  [(ngModel)]="usuario.email" name="email" (ngModelChange)="valueChangeEmail($event)">
+                        <p >{{emailValido}}</p><!--enlazamos con el campo del usuario y al cambio comprobamos si hay similar-->
+                   <!--variable para mostrar error-->
+                    </div>
+                </fieldset>
+                <fieldset class="form-group">
+                    <div class="col-sm-offset-2 col-sm-12"><!--boton para guardar solo activado cuando introduzca todo y sea todo valido-->
+                        <button type="submit" class="btn btn-primary" [disabled]="!userForm.form.valid">
+                            Guardar Usuario </button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    
+        
+    </div>
+    
+    
+</body>
+</html>
+
+
+

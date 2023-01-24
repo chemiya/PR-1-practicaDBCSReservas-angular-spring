@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+
+<!--formulario------------------------------------->
+    <div class="row">
+        <div class="col-sm-12">
+           <!--cuando se suba, llamo el metodo onsubmit y pongo nombre con ngform-->
+            <form (ngSubmit)="onSubmit()" #reservaForm="ngForm">
+
+                <!--nombre-------------------------->
+                <fieldset class="form-group">
+                    <div class="col-sm-3">
+                        
+                        <label class="control-label" for="nombre">GuestName </label>
+                        <input type="text" class="form-control" disabled
+                            name="nombre"  [(ngModel)]="currentUser.username" ><!--enlazamos con su campo de nombre-->
+                           
+                        </div>
+                </fieldset>
+
+
+                 <!--email-------------------------->
+                <fieldset class="form-group">
+                    <div class="col-sm-3">
+                       
+                        <label class="control-label" for="email">email </label>
+                        <input type="text" class="form-control" disabled
+                            name="email"  [(ngModel)]="currentUser.email" ><!--enlazamos con su campo de email-->
+                           
+                        
+                    </div>
+                </fieldset>
+
+
+                 <!--status-------------------------->
+                <fieldset class="form-group">
+                    <div class="col-sm-3">
+                        
+                        <label class="control-label" for="status">Estado de la reserva (status) </label><!--si tengo id se desactiva-->
+                        <select name="opciones" id="opciones" [disabled]="id ? false:true" 
+                        [(ngModel)]="reserva.status"><!--enlazamos con su campo de status-->
+                            <option value="Pending">Pending</option>
+                            <option value="Confirmed">Confirmed</option>
+                            <option value="Cancelled">Cancelled</option>
+                            
+                          </select>
+                           
+                        
+                    </div>
+                </fieldset>
+                
+
+
+                 <!--units-------------------------->
+                <fieldset class="form-group">
+                    <div class="col-sm-3">
+                       
+                        <label class="control-label" for="units">Numero de habitaciones (units)</label>
+                        <input type="text" class="form-control" required
+                            [(ngModel)]="reserva.units" name="units" (ngModelChange)="valueChangeUnits($event)">
+                            <!--enlazo con el campo de unidades, evento cuando se cambie para comprobaciones-->
+                    </div>
+                </fieldset>
+               
+
+
+                 <!--guests-------------------------->
+                <fieldset class="form-group">
+                    <div class="col-sm-3">
+                        
+                        <label class="control-label" for="numGuest">Numero de huespedes (numGuest)</label>
+                        <input type="number" class="form-control" required
+                            [(ngModel)]="reserva.numGuest" name="numGuest" (ngModelChange)="valueChangeHuespedes($event)">
+                            <p>{{falloHuespedes}}</p><!--enlazo con el campo de numeroguest, cuando cambien llamo evento-->
+                            <!--pongo error enlazado con la variable-->
+                    </div>
+                </fieldset>
+
+
+
+            <!--entrada-------------------------->
+                <fieldset class="form-group">
+                    <div class="col-sm-6">
+                       
+                        <label class="control-label" for="dateIn">Fecha de entrada (dateIn)</label>
+                        <input type="date" class="form-control" required
+                            [(ngModel)]="reserva.dateIn" name="dateIn" (ngModelChange)="valueChangeFechaInicio($event)">
+                            <!--enlazo con valor de la variable, cuando cambie hago comprobacion-->
+                    </div>
+                </fieldset>
+
+
+                 <!--salida-------------------------->
+                <fieldset class="form-group">
+                    <div class="col-sm-6">
+                        
+                        <label class="control-label" for="dateOut">Fecha de salida (dateOut)</label>
+                        <input type="date" class="form-control" required
+                            [(ngModel)]="reserva.dateOut" name="dateOut" (ngModelChange)="valueChangeFechaFin($event)">
+                            <p>{{falloFecha}}</p>
+                            <!--enlazo con valor de la variable, cuando cambien hago comprobacion y enlazo variable de error-->
+                    </div>
+                </fieldset>
+
+
+
+                 <!--precio-------------------------->
+                <div>
+                    <div class="col-sm-3">
+                        <h2>Precio final</h2>
+                        <h4 >{{reserva.price}}€</h4><!--pongo valor de la variable de error-->
+                       
+                    </div>
+                </div>
+
+
+                 <!--boton-------------------------->
+                <fieldset class="form-group">
+                    <div class="col-sm-offset-2 col-sm-12"><!--boton para guardar solo activado cuando introduzca todo-->
+                        <button type="submit" class="btn btn-primary" [disabled]="!reservaForm.form.valid">
+                            Guardar Reserva</button><!--desactivo el boton si no es valido el formulario-->
+                    </div>
+                </fieldset>
+
+
+
+                 <!--errores, si hay alguno lo muestro-------------------------->
+                <p *ngIf="corregirErrores">por favor corrige los errores para realizar la reserva</p>
+               
+            </form>
+        </div>
+    
+        
+    </div>
+    
+    
+</body>
+</html>
+
+
+
+

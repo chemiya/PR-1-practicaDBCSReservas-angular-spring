@@ -1,0 +1,146 @@
+
+<!--barra de arriba------------------------------------------------------->
+<nav class="navbar navbar-expand navbar-dark bg-dark">
+  <a  class="navbar-brand">Aplicacion DBCS</a>
+
+  <ul class="navbar-nav ml-auto" >
+      
+    <li class="nav-item"><!--vamos a ruta de identificacion desde un a-->
+      <a href="/login" class="nav-link" [routerLink]="['/login']">Iniciar Sesion</a>
+    </li>
+    
+  </ul>
+</nav>
+
+
+
+<!--hacer carta con imagen: primero formuario y se identifica alerta----------------------------------------->
+<div class="col-md-12">
+  <div class="card card-container">
+    <img
+      id="profile-img"
+      src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+      class="profile-img-card"
+    />
+
+
+
+
+<!--formulario------------------------------->
+    <form
+      *ngIf="!isSuccessful"
+      name="form"
+      (ngSubmit)="f.form.valid && onSubmit()"
+      #f="ngForm"
+      novalidate
+    >
+    <!--si todavia no se ha identificado, cuando lo suba si es valido llamamos metodo, ponemos nombre ngform-->
+
+    <!--entrada nombre------------------------------------->
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          class="form-control"
+          name="username"
+          [(ngModel)]="form.username"
+          required
+          minlength="3"
+          maxlength="20"
+          #username="ngModel"
+        />
+        <!--enlazamos con la variable, ponemosnombre input con ngmodel y validaciones de longitud-->
+
+
+         <!--alerta error nombre------------------------------------->
+        <div class="alert-danger" *ngIf="username.errors && f.submitted"><!--si sube formulario y hay errores-->
+          <div *ngIf="username.errors['required']">este campo es obligatorio</div><!--ponemos errores segun el campo-->
+          <div *ngIf="username.errors['minlength']">
+            introduce al menos 3 caracteres
+          </div>
+          <div *ngIf="username.errors['maxlength']">
+            como maximo introduce 20 caracteres
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+       <!--entrada email------------------------------------->
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          name="email"
+          [(ngModel)]="form.email"
+          required
+          email
+          #email="ngModel"
+        />
+        <!--enlazamos con la variable, requerido, ponemos nombre con ngmodel-->
+
+
+        <!--alerta error email------------------------------------->
+        <div class="alert-danger" *ngIf="email.errors && f.submitted"><!--si se ha subido ponemos errores, segun el error-->
+          <div *ngIf="email.errors['required']">este campo es obligatorio</div>
+          <div *ngIf="email.errors['email']">
+            introduce una direccion valida
+          </div>
+        </div>
+      </div>
+
+
+
+       <!--entrada password------------------------------------->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          name="password"
+          [(ngModel)]="form.password"
+          required
+          minlength="6"
+          #password="ngModel"
+        />
+        <!--enlazamos con la variable, longitud minima y nombre con ngModel-->
+
+
+         <!--alerta password------------------------------------->
+        <div class="alert-danger" *ngIf="password.errors && f.submitted"><!--si se ha subido y hay errores, ponemos los errores-->
+          <div *ngIf="password.errors['required']">este campo es obligatorio</div>
+          <div *ngIf="password.errors['minlength']">
+            introduce al menos 6 caracteres
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary btn-block">Registrarse</button>
+      </div>
+
+
+
+      <!--alerta fallo registro--------------------------->
+      <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed"><!--si se ha subido y ha fallado, ponemos variable error-->
+        Fallo en el registro!<br />{{ errorMessage }}
+      </div>
+    </form>
+
+
+
+
+<!--mensaje correcto--------------------------->
+    <div class="alert alert-success" *ngIf="isSuccessful"><!--si se registra correctamente, boton para navegar de ruta-->
+      <div class="d-flex flex-column align-items-center">
+        <p>Te has registrado correctamente</p>
+      <a class="btn btn-primary" [routerLink]="['/login']">Iniciar sesion</a>
+
+      </div>
+      
+    </div>
+
+  </div>
+</div>

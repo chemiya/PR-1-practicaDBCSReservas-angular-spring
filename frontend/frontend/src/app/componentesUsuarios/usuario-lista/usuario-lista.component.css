@@ -1,0 +1,16 @@
+.botonesFiltros{
+    display:flex;
+    justify-content: space-around;
+    align-items:center;
+}
+
+.contenedorAlertas{
+    font-size:25px;
+    display:flex;
+    justify-content: center;
+}
+
+
+
+
+

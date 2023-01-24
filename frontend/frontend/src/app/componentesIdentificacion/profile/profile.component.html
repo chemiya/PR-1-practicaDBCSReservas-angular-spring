@@ -1,0 +1,31 @@
+<div class="container" >
+
+  <!--nombre------------------------------------>
+  <header class="jumbotron">
+    <h3><!--pongo los valores de la vairble del usuario-->
+      <strong>{{ currentUser.username }}</strong> Profile
+    </h3>
+  </header>
+
+  <!--token------------------------------------>
+  <p>
+    <strong>Token:</strong>
+    {{ currentUser.accessToken.substring(0, 20) }} ...
+    {{ currentUser.accessToken.substr(currentUser.accessToken.length - 20) }}
+  </p>
+
+  <!--email------------------------------------>
+  <p>
+    <strong>Email:</strong>
+    {{ currentUser.email }}
+  </p>
+
+  <!--role------------------------------------>
+  <strong>Role:</strong>
+  <ul>
+   
+      {{ currentUser.role }}
+   
+  </ul>
+</div>
+

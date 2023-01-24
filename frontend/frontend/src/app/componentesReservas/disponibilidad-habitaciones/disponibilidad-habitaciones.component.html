@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h3 class="text-center">Comprobar disponibilidad</h3>
+
+    <!--formulario fechas--------------------------->
+    <div class="row ">
+
+        <div class="col d-flex justify-content-center align-items-center p-4">
+
+            <!--formulario con evento submit y nombro el formulario con ngform-->
+            <form (ngSubmit)="onSubmit()" #reservaForm="ngForm">
+
+
+                <!--fecha inicio--------------------------->
+                <div>
+
+                    <label class="control-label" for="dateIn">dateIn</label><!--enlazo con la fecha y evento al cambiar-->
+                    <input type="date" class="form-control" required [(ngModel)]="entradaFecha" name="dateIn"
+                        (ngModelChange)="valueChangeInicio($event)">
+                </div>
+
+
+                <!--fecha fin--------------------------->
+                <div>
+
+                    <!--enlazo con la fecha y evento al cambiar-->
+                    <label class="control-label" for="dateOut">dateOut</label>
+                    <input type="date" class="form-control" required [(ngModel)]="salidaFecha" name="dateOut"
+                        (ngModelChange)="valueChangeFin($event)">
+                </div>
+
+
+                <!--boton--------------------------->
+                <div>
+                    <!--si es valido todo lo del formulario le activo-->
+                    <button type="submit" class="btn btn-primary mt-3" [disabled]="!reservaForm.form.valid ">
+                        Comprobar Disponibilidad</button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+
+
+    <!--fallo fecha--------------------------->
+    <div class="container">
+        <div class="row">
+            <div class="col d-flex flex-column justify-content-center align-items-center">
+            <p class="text-center">{{falloFecha}}</p><!--muestro fallo de la fecha-->
+<!--segun variable de errores, pongo los errores-->
+            <p  class="text-center" *ngIf="corregirErrores">por favor corrige los errores para realizar la busqueda</p>
+        </div>
+
+        </div>
+       
+    </div>
+
+
+
+<!--resultados tabla--------------------------->
+    <h3 class="text-center">Resultados</h3>
+
+    <div class="container">
+        <div class="row ">
+            <div class="col d-flex flex-column align-items-center">
+
+                <table class="table w-50">
+                    <thead>
+                        <tr>
+                            <th>fecha</th>
+                            <th class="text-center">numero de habitaciones disponibles</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let disp of Dispons"><!--recorro las disponibilidades y muestro sus atributos-->
+                            <td><i>{{disp.fecha}}</i></td>
+                            <td class="text-center"><i>{{disp.numero}}</i></td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
